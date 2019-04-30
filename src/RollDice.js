@@ -2,23 +2,33 @@ import React, { Component } from 'react'
 import Die from './Die'
 
 class RollDice extends Component {
+  static defaultProps = {
+    sides: ['one', 'two', 'three', 'four', 'five', 'six']
+  }
+
   constructor(props) {
     super(props)
     this.state = {
-      number: 1
+      die1: 'one',
+      die2: 'one'
     }
+    this.roll = this.roll.bind(this)
+  }
+
+  roll() {
+    const newDie1 = this.props.sides[Math.floor(Math.random() * this.props.sides.length)]
+    let newDie2 = this.props.sides[Math.floor(Math.random() * this.props.sides.length)]
+
+    this.setState({ die1: newDie1, die2: newDie2 })
   }
 
   render() {
-    let rand = Math.floor(Math.random() * 6 + 1)
-    let value = 'two'
-
     return (
       <div>
         <h1>This is RollDice component</h1>
-        <Die face={value} />
-        <Die face={value} />
-        <button>Roll Dice!</button>
+        <Die face={this.state.die1} />
+        <Die face={this.state.die2} />
+        <button onClick={this.roll}>Roll Dice!</button>
       </div>
     )
   }
